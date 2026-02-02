@@ -41,7 +41,10 @@ except FileNotFoundError:
         quit()
 except Exception as e:
     messagebox.showerror(errors[0][0], errors[0][1]+f"\n{e}")
-    quit()
+    result = messagebox.askyesno(errors[1][0], errors[1][1]+"\n\nlocation : resources/path.json", icon="error")
+    if result:
+        repair("resources/path.json", '{"path" : "file/"}')
+        quit()
 
 try:
     with open("resources/types.json", "r") as f:
@@ -60,7 +63,10 @@ except FileNotFoundError:
         quit()
 except Exception as e:
     messagebox.showerror(errors[0][0], errors[0][1]+f"\n{e}")
-    quit()
+    result = messagebox.askyesno(errors[1][0], errors[1][1]+"\n\nlocation : resources/types.json", icon="error")
+    if result:
+        repair("resources/types.json", '{"CustomFileTypes" : []}')
+        quit()
     
 try:
     with open("resources/saveConf.json", "r") as f:
@@ -182,7 +188,7 @@ def saveFile(
     def save(file, type):
         process.config(text="Creating File")
         progress.config(value=150)
-        with open(f"file/{proj}{Title}{type}", "w") as f:
+        with open(f"file/{Proj}{Title}{type}", "w") as f:
             f.write("")
             process.config(text="Creating File (Complete)")
             progress.config(value=160)
@@ -247,6 +253,155 @@ def helpWindow():
     notebook = ttk.Notebook(helper)
     notebook.grid(row=0, column=0, sticky="news")
 
+    #/////////////// ui Tab \\\\\\\\\\\\\\\\\
+
+    ui = ttk.Frame(notebook)
+    notebook.add(ui, text="UI help")
+    ui.columnconfigure(0, weight=1)
+    ui.rowconfigure(0, weight=1)
+    
+    subNotebook = ttk.Notebook(ui)
+    subNotebook.grid(row=0, column=0, sticky="news")
+    
+    Header = ttk.Frame(subNotebook)
+    subNotebook.add(Header, text="Header")
+    
+    if True:
+        img = Image.open("assets/help/headerHelp.png")
+        img = img.resize((537, 409), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+    headerImage = ttk.Label(Header, image=img)
+    headerImage.image = img
+    headerImage.grid(row=0, column=0, padx=5, pady=5)
+      
+    
+    
+    editorHeader = ttk.Frame(subNotebook)
+    subNotebook.add(editorHeader, text="Editor Header")
+    
+    editorHeaderimageFrame = ttk.Frame(editorHeader)
+    editorHeaderimageFrame.grid(row=1, column=0, columnspan=3)
+    
+    editorHeaderImage1Frame = ttk.Frame(editorHeaderimageFrame)
+    editorHeaderImage1Frame.grid(row=0, column=0, sticky="w", pady=25)  
+    
+    editorImg1 = ImageTk.PhotoImage(Image.open("assets/help/tipBarHelp.png"), Image.LANCZOS)
+    editorHeaderImage1 = ttk.Label(editorHeaderImage1Frame, image=editorImg1)
+    editorHeaderImage1.image = editorImg1
+    editorHeaderImage1.grid(row=0, column=0, padx=5, pady=5)       
+    
+    editorHeaderImage2Frame = ttk.Frame(editorHeaderimageFrame)
+    editorHeaderImage2Frame.grid(row=1, column=0, sticky="w", pady=25)  
+    
+    editorImg2 = ImageTk.PhotoImage(Image.open("assets/help/progBarHelp.png"), Image.LANCZOS)
+    editorHeaderImage2 = ttk.Label(editorHeaderImage2Frame, image=editorImg2)
+    editorHeaderImage2.image = editorImg2
+    editorHeaderImage2.grid(row=0, column=0, padx=5, pady=5)
+    
+    editorHeaderImage3Frame = ttk.Frame(editorHeaderimageFrame)
+    editorHeaderImage3Frame.grid(row=2, column=0, sticky="w", pady=25)  
+    
+    editorImg3 = ImageTk.PhotoImage(Image.open("assets/help/saveSectionHelp.png"), Image.LANCZOS)
+    editorHeaderImage3 = ttk.Label(editorHeaderImage3Frame, image=editorImg3)
+    editorHeaderImage3.image = editorImg3
+    editorHeaderImage3.grid(row=0, column=0, padx=5, pady=5)
+        
+    headerTabs = ttk.Frame(subNotebook)
+    subNotebook.add(headerTabs, text="Header Tabs")
+
+    if True:
+        img = Image.open("assets/help/tabsHelp.png")
+        img = img.resize((537, 409), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+    headerTabImage = ttk.Label(headerTabs, image=img)
+    headerTabImage.image = img
+    headerTabImage.grid(row=0, column=0, padx=5, pady=5)
+    
+    
+    
+    textBox = ttk.Frame(subNotebook)
+    subNotebook.add(textBox, text="Textbox")
+    
+    if True:
+        img = Image.open("assets/help/textboxHelp.png")
+        img = img.resize((537, 409), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+    textboxImage = ttk.Label(textBox, image=img)
+    textboxImage.image = img
+    textboxImage.grid(row=0, column=0, padx=5, pady=5)    
+    
+    
+    
+    Dropdowns = ttk.Frame(subNotebook)
+    subNotebook.add(Dropdowns, text="Menus")
+    
+    if True:
+        img = Image.open("assets/help/menuHelp.png")
+        img = img.resize((537, 409), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+    menuImage = ttk.Label(Dropdowns, image=img)
+    menuImage.image = img
+    menuImage.grid(row=0, column=0, padx=5, pady=5)     
+    
+    
+    
+    settingss = ttk.Frame(subNotebook)
+    subNotebook.add(settingss, text="Settings")
+    
+    switchVar = tk.StringVar(value="option1")
+    
+    switchImage1 = ttk.Radiobutton(settingss, text="Default Author", variable=switchVar, value="option1")
+    switchImage2 = ttk.Radiobutton(settingss, text="File Related\nUpper Half", variable=switchVar, value="option2")
+    switchImage3 = ttk.Radiobutton(settingss, text="File Related\nLower Half", variable=switchVar, value="option3")
+
+    switchImage1.grid(row=0, column=0)
+    switchImage2.grid(row=0, column=1)
+    switchImage3.grid(row=0, column=2)
+    
+    imageFrame = ttk.Frame(settingss)
+    imageFrame.grid(row=1, column=0, columnspan=3)
+    
+    settingImage1Frame = ttk.Frame(imageFrame)
+    settingImage1Frame.grid(row=0, column=0)  
+    
+    img1 = ImageTk.PhotoImage(Image.open("assets/help/settingDefaultAuthHelp.png").resize((400, 297), Image.LANCZOS))
+    settingImage1 = ttk.Label(settingImage1Frame, image=img1)
+    settingImage1.image = img1
+    settingImage1.grid(row=0, column=0, padx=5, pady=5)       
+    
+    settingImage2Frame = ttk.Frame(imageFrame)
+    
+    img2 = ImageTk.PhotoImage(Image.open("assets/help/settingFRS_UH_Help.png").resize((400, 297), Image.LANCZOS))
+    settingImage2 = ttk.Label(settingImage2Frame, image=img2)
+    settingImage2.image = img2
+    settingImage2.grid(row=0, column=0, padx=5, pady=5)
+    
+    settingImage3Frame = ttk.Frame(imageFrame)
+    
+    img3 = ImageTk.PhotoImage(Image.open("assets/help/settingFRS_LH_Help.png").resize((400, 297), Image.LANCZOS))
+    settingImage3 = ttk.Label(settingImage3Frame, image=img3)
+    settingImage3.image = img3
+    settingImage3.grid(row=0, column=0, padx=5, pady=5)
+    
+    def imageSwitch():
+        choice = switchVar.get()
+        settingImage1Frame.grid_remove()
+        settingImage2Frame.grid_remove()
+        settingImage3Frame.grid_remove()
+
+        if choice == "option1":
+            settingImage1Frame.grid(row=0, column=0)
+        elif choice == "option2":
+            settingImage2Frame.grid(row=0, column=0)
+        else:
+            settingImage3Frame.grid(row=0, column=0)
+    
+    switchImage1.config(command=imageSwitch)
+    switchImage2.config(command=imageSwitch)
+    switchImage3.config(command=imageSwitch)
+    
+    #/////////////// texts Tab \\\\\\\\\\\\\\\\\
+
     texts = ttk.Frame(notebook)
     notebook.add(texts, text="texts")
     
@@ -276,6 +431,8 @@ def helpWindow():
     lists.grid(row=1, column=0, sticky="nwes", padx=5, pady=5, columnspan=2)
     listsLabel = ttk.Label(lists, text="-\tBullets\t\t - Bullet Item 1\t\t1. Ordered Item 1\n#. \tOrdered\t\t - Bullet Item 2\t\t2. Ordered Item 2\n\t\t\t - Bullet Item 3\t\t3. Ordered Item 3")
     listsLabel.grid(row=0, column=0)
+    
+    helper.mainloop()
 
 class settingsSave:
     def Author(auth : ttk.Entry):
@@ -294,6 +451,91 @@ class settingsSave:
         data["author"] = defaultAuth
 
         with open("resources/auth.json", "w") as f:
+            json.dump(data, f, indent=4)
+            
+    def CustomExtension(_customExtensions : ttk.Entry):
+
+        customExtensions = _customExtensions.get()
+        
+        if "-r" in customExtensions:
+            try:
+                with open("resources/types.json", "r") as f:
+                    data = json.load(f)
+            except FileNotFoundError:
+                result = messagebox.askyesno("FileNotFoundError", "The types.json file has not been found\nThis is a Manditory file and in this situation it is needed\n\nClick yes to repair (The custom extensions you have made will be lossed)", icon="error")
+                if result:
+                    repair("resources/types.json", '{"CustomFileTypes" : []}')
+                root.destroy()
+            
+            customExtensions = customExtensions.replace("-r", "").strip()
+            
+            try:
+                data["CustomFileTypes"].remove(customExtensions)
+            except Exception as e:
+                messagebox.showerror(errors[0][0], errors[0][1]+f"\n{e}")
+
+            with open("resources/types.json", "w") as f:
+                json.dump(data, f, indent=4)            
+        else:
+            try:
+                with open("resources/types.json", "r") as f:
+                    data = json.load(f)
+            except FileNotFoundError:
+                result = messagebox.askyesno("FileNotFoundError", "The types.json file has not been found\nThis is a Manditory file and in this situation it is needed\n\nClick yes to repair (The custom extensions you have made will be lossed)", icon="error")
+                if result:
+                    repair("resources/types.json", '{"CustomFileTypes" : []}')
+                root.destroy()
+                
+            data["CustomFileTypes"].append(customExtensions)
+
+            with open("resources/types.json", "w") as f:
+                json.dump(data, f, indent=4)
+                
+        SaveDestinationTable.delete(*SaveDestinationTable.get_children())
+        with open("resources/types.json", "r") as f:
+            data = json.load(f)
+            items = data["CustomFileTypes"]
+            
+        for i in items:
+            SaveDestinationTable.insert("", "end", values=(i,))
+            
+        customExtension.delete(0, tk.END)
+            
+    def backupDef(var):
+        varToGet = var.get()
+
+        try:
+            with open("resources/saveConf.json", "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            result = messagebox.askyesno("FileNotFoundError", "The saveConf.json file has not been found\nThis is a Manditory file and in this situation it is needed\n\nClick yes to repair (The bool will be set to True)", icon="error")
+            if result:
+                repair("resources/saveConf.json", '{"backup" : true}')
+            root.destroy()
+
+        if varToGet == 1:
+            data["backup"] = True
+        else:
+            data["backup"] = False
+
+        with open("resources/saveConf.json", "w") as f:
+            json.dump(data, f, indent=4)        
+            
+    def saveDestination(dest : ttk.Entry):
+        destination = dest.get()
+
+        try:
+            with open("resources/path.json", "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            result = messagebox.askyesno("FileNotFoundError", "The path.json file has not been found\nThis is a Manditory file and in this situation it is needed\n\nClick yes to repair (The default author will be lossed)", icon="error")
+            if result:
+                repair("resources/path.json", '{"path" : "file/"}')
+            root.destroy()
+
+        data["path"] = destination
+
+        with open("resources/path.json", "w") as f:
             json.dump(data, f, indent=4)
             
 def textSeparator(
@@ -327,11 +569,14 @@ def isProject():
         project.state(["disabled"])
 
 def sett():
+    global SaveDestinationTable, customExtension
     setting = tk.Toplevel()
     setting.title("Settings")
-    #setting.geometry("500x500")
     setting.columnconfigure(0, weight=1)
     setting.rowconfigure(0, weight=1)
+    setting.grab_set()
+    setting.focus_set()
+    setting.lift()
     
     theMainFrame = ttk.Frame(setting)
     theMainFrame.grid(row=0, column=0, sticky="news")
@@ -347,6 +592,70 @@ def sett():
     
     saveAuth = ttk.Button(metadataSection, text="Apply", padding=0, takefocus=0, command= lambda : settingsSave.Author(defaultAuthor))
     saveAuth.grid(row=0, column=2, padx=5, pady=5)
+    
+    fileRelatedSettings = ttk.Labelframe(theMainFrame, text="File Related Settings")
+    fileRelatedSettings.grid(row=1, column=0, sticky="news", padx=5, pady=5)
+    
+    frameSD = ttk.Frame(fileRelatedSettings)
+    frameSD.grid(row=0, column=0, sticky="w")
+    
+    saveDestinationLabel = ttk.Label(frameSD, text="Save Destination    : ")
+    saveDestinationLabel.grid(row=0, column=0, sticky="news", padx=5, pady=5)
+    
+    with open("resources/path.json", "r") as f:
+        filePath = json.load(f)
+        filePath = filePath["path"]    
+            
+    saveDestination = ttk.Entry(frameSD, width=30)
+    saveDestination.grid(row=0, column=1, padx=5, pady=5)
+    saveDestination.insert(0, filePath)
+        
+    saveSaveDestination = ttk.Button(frameSD, text="Apply", padding=0, takefocus=0, command= lambda : settingsSave.saveDestination(saveDestination))
+    saveSaveDestination.grid(row=0, column=2, padx=5, pady=5)    
+    frameCFT = ttk.Frame(fileRelatedSettings)
+    frameCFT.grid(row=1, column=0, sticky="w")
+    
+    saveDestinationLabel = ttk.Label(frameCFT, text="Custom File Types : ")
+    saveDestinationLabel.grid(row=0, column=0, sticky="news", padx=5, pady=5)
+    
+    customExtension = ttk.Entry(frameCFT, width=30)
+    customExtension.grid(row=0, column=1, padx=5, pady=5, sticky="we")
+    
+    saveCustomExtension = ttk.Button(frameCFT, text="Save", padding=0, takefocus=0, command= lambda : settingsSave.CustomExtension(customExtension))
+    saveCustomExtension.grid(row=0, column=2, padx=5, pady=5) 
+    
+    if True:
+        img = Image.open("assets/info.png")
+        img = img.resize((12, 12), Image.LANCZOS)
+        img = ImageTk.PhotoImage(img)
+    textStylesInfo = ttk.Button(frameCFT, image=img, takefocus=0, padding=-2, command= lambda : messagebox.showinfo("How to delete", f"To delete an extension type -r anywere (recomended after the extension)"))
+    textStylesInfo.image = img
+    textStylesInfo.place(x=376, y=7)
+
+    SaveDestinationTable = ttk.Treeview(frameCFT, columns=("value",), show="headings", height=4)
+    SaveDestinationTable.heading("value", text="User Extensions")
+    SaveDestinationTable.column("value", anchor="w", width=10)
+    SaveDestinationTable.grid(row=1, column=0, sticky="nsew")
+    for i in CustomFileTypes:
+        SaveDestinationTable.insert("", "end", values=(i,))
+        
+    frameCFT_R = ttk.Frame(frameCFT)
+    frameCFT_R.grid(row=1, column=1, sticky="wnse")
+
+    with open("resources/saveConf.json", "r") as f:
+        saveConfData = json.load(f)
+        confBackup = saveConfData["backup"]
+
+    backupCheckVar = tk.IntVar()
+    if confBackup:
+        backupCheckVar.set(1)
+    else:
+        backupCheckVar.set(0)
+         
+    backupCheck = ttk.Checkbutton(frameCFT_R, text="Backup when saving", variable=backupCheckVar, command= lambda : settingsSave.backupDef(backupCheckVar))
+    backupCheck.grid(row=0, column=0, padx=5, pady=5, sticky="wn")
+    
+    settings.mainloop()
 
 def saveMenuDef(event=None):
     saveMenu.tk_popup(save.winfo_rootx(), save.winfo_rooty() + save.winfo_height())
@@ -391,7 +700,7 @@ else:
         latestVersion = r.get("zipball_url")
         
 proj = False
-version = "0.3"
+version = "0.3.7"
 build   = "2.1.2026"
 
 # ├
